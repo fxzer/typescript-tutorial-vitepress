@@ -37,7 +37,7 @@ export default  {
     sidebarMenuLabel: '目录',
     darkModeSwitchLabel: '主题切换',
     footer: {
-      message: 'Released under the <a href="https://github.com/fxzer/typescript-tutorial-vitepress/blob/master/LICENSE">MIT License</a>.',
+      message: 'Released under the <a href="https://github.com/fxzer/typescript-tutorial-vitepress/blob/main/LICENSE">MIT License</a>.',
       copyright: 'Copyright © 2023-present <a href="https://github.com/fxzer">fxzer</a>.',
     },
     docFooter: {
@@ -46,7 +46,7 @@ export default  {
     },
     nav: getNavs(),
     editLink: {
-      pattern: "https://github.com/fxzer/typescript-tutorial-vitepress/edit/master/docs/:path",
+      pattern: "https://github.com/fxzer/typescript-tutorial-vitepress/edit/main/docs/:path",
     },
     socialLinks,
     sidebar,
