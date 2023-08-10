@@ -185,6 +185,10 @@ function bar() {
 
 `@extends`命令用于定义继承的基类。
 
+<<<<<<< HEAD
+=======
+```javascript
+>>>>>>> upstream/main
 /**
  * @extends {Base}
  */

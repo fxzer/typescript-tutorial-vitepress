@@ -32,7 +32,7 @@ let arr:(number|string)[];
 let arr:any[];
 ```
 
-数组类型的第二种写法是使用 TypeScipt 内置的 Array 接口。
+数组类型的第二种写法是使用 TypeScript 内置的 Array 接口。
 
 ```typescript
 let arr:Array<number> = [1, 2, 3];
@@ -124,7 +124,11 @@ arr.push(123);
 arr.push('abc');
 ```
 
+<<<<<<< HEAD
 上面示例中，数组变量`arr`的初始值是空数值，然后随着新成员的加入，TypeScript 会自动修改推断的数组类型。
+=======
+上面示例中，数组变量`arr`的初始值是空数组，然后随着新成员的加入，TypeScript 会自动修改推断的数组类型。
+>>>>>>> upstream/main
 
 但是，类型推断的自动更新只发生初始值为空数组的情况。如果初始值不是空数组，类型推断就不会更新。
 

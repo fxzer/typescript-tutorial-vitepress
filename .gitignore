@@ -19,3 +19,6 @@ pnpm-debug.log*
 # json
 meta.json
 .vercel
+node_modules/
+dist/
+package-lock.json
