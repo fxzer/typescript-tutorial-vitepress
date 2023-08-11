@@ -114,14 +114,14 @@ const arr = [];
 后面，为这个数组赋值时，TypeScript 会自动更新类型推断。
 
 ```typescript
-// 推断为 any[]
 const arr = [];
+arr // 推断为 any[]
 
-// 推断类型为 number[]
 arr.push(123);
+arr // 推断类型为 number[]
 
-// 推断类型为 (string | number)[]
 arr.push('abc');
+arr // 推断类型为 (string|number)[]
 ```
 
 <<<<<<< HEAD
