@@ -235,7 +235,16 @@ Math.abs(n2) // 报错
 
 上面示例中，`Math.abs()`方法的参数类型被定义成小写的`number`，传入大写的`Number`类型就会报错。
 
-上一小节说过，`Symbol()`和`BigInt()`这两个函数不能当作构造函数使用，所以没有办法直接获得 symbol 类型和 bigint 类型的包装对象，因此`Symbol`和`BigInt`这两个类型虽然存在，但是完全没有使用的理由。
+上一小节说过，`Symbol()`和`BigInt()`这两个函数不能当作构造函数使用，所以没有办法直接获得 symbol 类型和 bigint 类型的包装对象，除非使用下面的写法。但是，它们没有使用场景，因此`Symbol`和`BigInt`这两个类型虽然存在，但是完全没有使用的理由。
+
+```typescript
+let a = Object(Symbol());
+let b = Object(BigInt());
+```
+
+上面示例中，得到的就是 Symbol 和 BigInt 的包装对象，但是没有使用的意义。
+
+注意，目前在 TypeScript 里面，`symbol`和`Symbol`两种写法没有差异，`bigint`和`BigInt`也是如此，不知道是否属于官方的疏忽。建议始终使用小写的`symbol`和`bigint`，不使用大写的`Symbol`和`BigInt`。
 
 ## Object 类型与 object 类型
 
@@ -383,7 +392,7 @@ let x:undefined = null; // 报错
 let y:null = undefined; // 报错
 ```
 
-上面示例中，`undefined`类型的变量赋值为`null`，或者`null`类型的变量赋值为`undefind`，都会报错。
+上面示例中，`undefined`类型的变量赋值为`null`，或者`null`类型的变量赋值为`undefined`，都会报错。
 
 总之，打开`strictNullChecks`以后，`undefined`和`null`只能赋值给自身，或者`any`类型和`unknown`类型的变量。
 
@@ -446,7 +455,7 @@ x = y; // 报错
 y = x; // 正确
 ```
 
-上面示例中，变量`x`属于子类型，变量`y`属于父类型。`y`不能赋值为子类型`x`，但是反过来是可以的。
+上面示例中，变量`x`属于子类型，变量`y`属于父类型。子类型`x`不能赋值为父类型`y`，但是反过来是可以的。
 
 如果一定要让子类型可以赋值为父类型的值，就要用到类型断言（详见《类型断言》一章）。
 

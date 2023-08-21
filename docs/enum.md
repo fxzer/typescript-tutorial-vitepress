@@ -32,7 +32,7 @@ enum Color {
 }
 ```
 
-上面示例声明了一个 Enum 结构`Color`，里面包含三个成员`Red`、`Green`和`Blue`。第一个成员的值默认为整数`0`，第二个为`1`，第二个为`2`，以此类推。
+上面示例声明了一个 Enum 结构`Color`，里面包含三个成员`Red`、`Green`和`Blue`。第一个成员的值默认为整数`0`，第二个为`1`，第三个为`2`，以此类推。
 
 使用时，调用 Enum 的某个成员，与调用对象属性的写法一样，可以使用点运算符，也可以使用方括号运算符。
 
@@ -107,7 +107,7 @@ compute(Operator.ADD, 1, 3) // 4
 
 上面示例中，Enum 结构`Operator`的四个成员表示四则运算“加减乘除”。代码根本不需要用到这四个成员的值，只用成员名就够了。
 
-Enum 作为类型有一个缺点，就是输入任何数值都不报错。
+[TypeScript 5.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#enum-overhaul) 之前，Enum 有一个 Bug，就是 Enum 类型的变量可以赋值为任何数值。
 
 ```typescript
 enum Bool {
@@ -119,10 +119,10 @@ function foo(noYes:Bool) {
   // ...
 }
 
-foo(33);  // 不报错
+foo(33);  // TypeScript 5.0 之前不报错
 ```
 
-上面代码中，函数`foo`的参数`noYes`只有两个可用的值，但是输入任意数值，编译都不会报错。
+上面示例中，函数`foo`的参数`noYes`是 Enum 类型，只有两个可用的值。但是，TypeScript 5.0 之前，任何数值作为函数`foo`的参数，编译都不会报错，TypeScript 5.0 纠正了这个问题。
 
 另外，由于 Enum 结构编译后是一个对象，所以不能有与它同名的变量（包括对象、函数、类等）。
 
@@ -372,7 +372,7 @@ const enum E {
 enum E {
   A,
 }
-const enum E2 {
+const enum E {
   B = 1,
 }
 ```
@@ -404,7 +404,7 @@ enum Foo {
 }
 ```
 
-上面示例中，`A`之前没有其他成员，所以可以不设置初始值，默认等于`0`；`C`之前有一个字符串成员，必须`C`必须有初始值，不赋值就报错了。
+上面示例中，`A`之前没有其他成员，所以可以不设置初始值，默认等于`0`；`C`之前有一个字符串成员，所以`C`必须有初始值，不赋值就报错了。
 
 Enum 成员可以是字符串和数值混合赋值。
 
@@ -452,7 +452,7 @@ f('One') // 报错
 
 所以，字符串 Enum 作为一种类型，有限定函数参数的作用。
 
-前面说过，数值 Enum 的成员值往往不重要。但是有些场合，开发者可能希望 Enum 成员值可以保存一些有用的信息，所以 TypeScript 才设计了字符串 Enum.
+前面说过，数值 Enum 的成员值往往不重要。但是有些场合，开发者可能希望 Enum 成员值可以保存一些有用的信息，所以 TypeScript 才设计了字符串 Enum。
 
 ```typescript
 const enum MediaTypes {
@@ -532,7 +532,7 @@ enum MyEnum {
   B = 'b'
 }
 
-// { a：any, b: any }
+// { a: any, b: any }
 type Foo = { [key in MyEnum]: any };
 ```
 

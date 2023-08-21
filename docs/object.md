@@ -167,13 +167,22 @@ type User = {
 // 等同于
 type User = {
   firstName: string;
-  lastName: string|undefined;
+  lastName?: string|undefined;
 };
 ```
 
-上面示例中，类型`User`的属性`lastName`可以是字符串，也可以是`undefined`，就表示该属性可以省略不写。
+上面示例中，类型`User`的可选属性`lastName`可以是字符串，也可以是`undefined`，即可选属性可以赋值为`undefined`。
 
-同理，读取一个可选属性时，有可能返回`undefined`。
+```typescript
+const obj: {
+  x: number;
+  y?: number;
+} = { x: 1, y: undefined };
+```
+
+上面示例中，可选属性`y`赋值为`undefined`，不会报错。
+
+同样地，读取一个没有赋值的可选属性时，返回`undefined`。
 
 ```typescript
 type MyObj = {
@@ -185,7 +194,7 @@ const obj:MyObj = { x: 'hello' };
 obj.y.toLowerCase() // 报错
 ```
 
-上面示例中，最后一行会报错，因为`obj.y`有可能是`undefined`，无法对其调用`toLowerCase()`。
+上面示例中，最后一行会报错，因为`obj.y`返回`undefined`，无法对其调用`toLowerCase()`。
 
 所以，读取可选属性之前，必须检查一下是否为`undefined`。
 
@@ -215,6 +224,30 @@ let lastName = user.lastName ?? 'Bar';
 ```
 
 上面示例中，写法一使用三元运算符`?:`，判断是否为`undefined`，并设置默认值。写法二使用 Null 判断运算符`??`，与写法一的作用完全相同。
+
+TypeScript 提供编译设置`ExactOptionalPropertyTypes`，只要同时打开这个设置和`strictNullChecks`，可选属性就不能设为`undefined`。
+
+```typescript
+// 打开 ExactOptionsPropertyTypes 和 strictNullChecks
+const obj: {
+  x: number;
+  y?: number;
+} = { x: 1, y: undefined }; // 报错
+```
+
+上面示例中，打开了这两个设置以后，可选属性就不能设为`undefined`了。
+
+注意，可选属性与允许设为`undefined`的必选属性是不等价的。
+
+```typescript
+type A = { x:number, y?:number };
+type B = { x:number, y:number|undefined };
+
+const ObjA:A = { x: 1 }; // 正确
+const ObjB:B = { x: 1 }; // 报错
+```
+
+上面示例中，属性`y`如果是一个可选属性，那就可以省略不写；如果是允许设为`undefined`的必选属性，一旦省略就会报错，必须显式写成`{ x: 1, y: undefined }`。
 
 ## 只读属性
 
@@ -303,7 +336,7 @@ w.age += 1;
 r.age // 43
 ```
 
-上面示例中，变量`w`和`r`指向同一个对象，其中`w`是可写的，`r`的只读的。那么，对`w`的属性修改，会影响到`r`。
+上面示例中，变量`w`和`r`指向同一个对象，其中`w`是可写的，`r`是只读的。那么，对`w`的属性修改，会影响到`r`。
 
 如果希望属性值是只读的，除了声明时加上`readonly`关键字，还有一种方法，就是在赋值时，在对象后面加上只读断言`as const`。
 
@@ -468,14 +501,14 @@ function draw({
 
 ## 结构类型原则
 
-只要对象 B 满足 对象 A 的结构特征，TypeScript 就认为对象 B 兼容对象 A 的类型，这称为“结构类型”原则（structual typing）。
+只要对象 B 满足 对象 A 的结构特征，TypeScript 就认为对象 B 兼容对象 A 的类型，这称为“结构类型”原则（structural typing）。
 
 ```typescript
-const A = {
+type A = {
   x: number;
 };
 
-const B = {
+type B = {
   x: number;
   y: number;
 };
@@ -577,7 +610,7 @@ type Options = {
   darkMode?:boolean;
 };
 
-const Obj:Options = {
+const obj:Options = {
   title: '我的网页',
   darkmode: true, // 报错
 };
@@ -593,7 +626,7 @@ let myOptions = {
   darkmode: true,
 };
 
-const Obj:Options = myOptions;
+const obj:Options = myOptions;
 ```
 
 上面示例中，创建了一个中间变量`myOptions`，就不会触发严格字面量规则，因为这时变量`obj`的赋值，不属于直接字面量赋值。
@@ -601,7 +634,7 @@ const Obj:Options = myOptions;
 如果你确认字面量没有错误，也可以使用类型断言规避严格字面量检查。
 
 ```typescript
-const Obj:Options = {
+const obj:Options = {
   title: '我的网页',
   darkmode: true,
 } as Options;
@@ -650,7 +683,19 @@ computeDistance({x: 1, y: 2}); // 正确
 
 ## 最小可选属性规则
 
-如果一个对象的所有属性都是可选的，会触发最小可选属性规则。
+根据“结构类型”原则，如果一个对象的所有属性都是可选的，那么其他对象跟它都是结构类似的。
+
+```typescript
+type Options = {
+  a?:number;
+  b?:number;
+  c?:number;
+};
+```
+
+上面示例中，类型`Options`的所有属性都是可选的，所以它可以是一个空对象，也就意味着任意对象都满足`Options`的结构。
+
+为了避免这种情况，TypeScript 2.4 引入了一个“最小可选属性规则”，也称为[“弱类型检测”](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-4.html#weak-type-detection)（weak type detection）。
 
 ```typescript
 type Options = {
@@ -659,24 +704,16 @@ type Options = {
   c?:number;
 };
 
-const obj:Options = {
-  d: 123 // 报错
-};
+const opts = { d: 123 };
+
+const obj:Options = opts; // 报错
 ```
 
-上面示例中，类型`Options`是一个对象，它的所有属性都是可选的，这导致任何对象实际都符合`Options`类型。
+上面示例中，对象`opts`与类型`Options`没有共同属性，赋值给该类型的变量就会报错。
 
-为了避免这种情况，TypeScript 添加了最小可选属性规则，规定这时属于`Options`类型的对象，必须至少存在一个可选属性，不能所有可选属性都不存在。这就是为什么上例的`myObj`对象会报错的原因。
+报错原因是，如果某个类型的所有属性都是可选的，那么该类型的对象必须至少存在一个可选属性，不能所有可选属性都不存在。这就叫做“最小可选属性规则”。
 
-这条规则无法通过中间变量规避。
-
-```typescript
-const myOptions = { d: 123 };
-
-const obj:Options = myOptions; // 报错
-```
-
-上面示例中，即使使用了中间变量`myOptions`，由于存在最小可选属性规则，依然会报错。
+如果想规避这条规则，要么在类型里面增加一条索引属性（`[propName: string]: someType`），要么使用类型断言（`opts as Options`）。
 
 ## 空对象
 

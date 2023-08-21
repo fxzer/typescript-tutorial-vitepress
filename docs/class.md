@@ -41,14 +41,22 @@ class Point {
 
 上面示例中，属性`x`和`y`的类型都会被推断为 number。
 
-TypeScript 有一个配置项`strictPropertyInitialization`，只要打开，就会检查属性是否设置了初值，如果没有就报错。
+TypeScript 有一个配置项`strictPropertyInitialization`，只要打开（默认是打开的），就会检查属性是否设置了初值，如果没有就报错。
 
-如果你打开了这个设置，但是某些情况下，不是在声明时赋值或在构造方法里面赋值，为了防止这个设置报错，可以使用非空断言。
+```typescript
+// 打开 strictPropertyInitialization
+class Point {
+  x: number; // 报错
+  y: number; // 报错
+}
+```
+
+上面示例中，如果类的顶层属性不赋值，就会报错。如果不希望出现报错，可以使用非空断言。
 
 ```typescript
 class Point {
-  x!:number;
-  y!:number;
+  x!: number;
+  y!: number;
 }
 ```
 
@@ -205,21 +213,22 @@ c.name = 'bar'; // 报错
 
 上面示例中，`name`属性没有`set`方法，对该属性赋值就会报错。
 
-（2）`set`方法的参数类型，必须兼容`get`方法的返回值类型，否则报错。
+（2）TypeScript 5.1 版之前，`set`方法的参数类型，必须兼容`get`方法的返回值类型，否则报错。
 
 ```typescript
+// TypeScript 5.1 版之前
 class C {
   _name = '';
-  get name():string {
+  get name():string {  // 报错
     return this._name;
   }
   set name(value:number) {
-    this._name = value; // 报错
+    this._name = String(value);
   }
 }
 ```
 
-上面示例中，`get`方法的返回值类型是字符串，与`set`方法参数类型不兼容，导致报错。
+上面示例中，`get`方法的返回值类型是字符串，与`set`方法的参数类型`number`不兼容，导致报错。改成下面这样，就不会报错。
 
 ```typescript
 class C {
@@ -228,14 +237,14 @@ class C {
     return this._name;
   }
   set name(value:number|string) {
-    this._name = String(value); // 正确
+    this._name = String(value);
   }
 }
 ```
 
-上面示例中，`set`方法的参数类型（`number|return`）兼容`get`方法的返回值类型（`string`），这是允许的。但是，最终赋值的时候，还是必须保证与`get`方法的返回值类型一致。
+上面示例中，`set`方法的参数类型（`number|string`）兼容`get`方法的返回值类型（`string`），这是允许的。
 
-另外，如果`set`方法的参数没有指定类型，那么会推断为与`get`方法返回值类型一致。
+TypeScript 5.1 版做出了[改变](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-1.html#unrelated-types-for-getters-and-setters)，现在两者可以不兼容。
 
 （3）`get`方法与`set`方法的可访问性必须一致，要么都为公开方法，要么都为私有方法。
 
@@ -278,7 +287,7 @@ class MyClass {
 }
 ```
 
-属性存取器等同于方法，也必须包括在属性索性里面。
+属性存取器等同于方法，也必须包括在属性索引里面。
 
 ```typescript
 class MyClass {
@@ -471,7 +480,7 @@ class SecretCar implements SuperCar {
 }
 ```
 
-上面示例中，接口`SuperCar`通过`SuperCar`接口，就间接实现了多个接口。
+上面示例中，类`SecretCar`通过`SuperCar`接口，就间接实现了多个接口。
 
 注意，发生多重实现时（即一个接口同时实现多个接口），不同接口不能有互相冲突的属性。
 
@@ -509,6 +518,23 @@ a.y // 10
 
 上面示例中，类`A`与接口`A`同名，后者会被合并进前者的类型定义。
 
+注意，合并进类的非空属性（上例的`y`），如果在赋值之前读取，会返回`undefined`。
+
+```typescript
+class A {
+  x:number = 1;
+}
+
+interface A {
+  y:number;
+}
+
+let a = new A();
+a.y // undefined
+```
+
+上面示例中，根据类型定义，`y`应该是一个非空属性。但是合并后，`y`有可能是`undefined`。
+
 ## Class 类型
 
 ### 实例类型
@@ -539,12 +565,12 @@ class Car implements MotorVehicle {
 }
 
 // 写法一
-const c:Car = new Car();
+const c1:Car = new Car();
 // 写法二
-const c:MotorVehicle = new Car();
+const c2:MotorVehicle = new Car();
 ```
 
-上面示例中，变量`c`的类型可以写成类`Car`，也可以写成接口`MotorVehicle`。它们的区别是，如果类`Car`有接口`MotoVehicle`没有的属性和方法，那么只有变量`c1`可以调用这些属性和方法。
+上面示例中，变量的类型可以写成类`Car`，也可以写成接口`MotorVehicle`。它们的区别是，如果类`Car`有接口`MotoVehicle`没有的属性和方法，那么只有变量`c1`可以调用这些属性和方法。
 
 作为类型使用时，类名只能表示实例的类型，不能表示类的自身类型。
 
@@ -1083,7 +1109,7 @@ if ('x' in a) { // 正确
 
 上面示例中，`A`类的属性`x`是私有属性，但是实例使用方括号，就可以读取这个属性，或者使用`in`运算符检查这个属性是否存在，都可以正确执行。
 
-由于`private`存在这些问题，加上它是 ES6 标准发布前出台的，而 ES6 引入了自己的私有成员写法`#propName`。因此建议不使用`private`，改用 ES6 的写法，获得真正意义的私有成员。
+由于`private`存在这些问题，加上它是 ES2022 标准发布前出台的，而 ES2022 引入了自己的私有成员写法`#propName`。因此建议不使用`private`，改用 ES2022 的写法，获得真正意义的私有成员。
 
 ```typescript
 class A {
@@ -1094,7 +1120,7 @@ const a = new A();
 a['x'] // 报错
 ```
 
-上面示例中，采用了 ES6 的私有成员写法（属性名前加`#`），TypeScript 就正确识别了实例对象没有属性`x`，从而报错。
+上面示例中，采用了 ES2022 的私有成员写法（属性名前加`#`），TypeScript 就正确识别了实例对象没有属性`x`，从而报错。
 
 构造方法也可以是私有的，这就直接防止了使用`new`命令生成实例对象，只能在类的内部创建实例对象。
 
@@ -1342,7 +1368,7 @@ class Box<Type> {
 
 ## 抽象类，抽象成员
 
-TypeScript 允许在类的定义前面，加上关键字`abstract`，表示该类不能被实例化，只能当作其他类的模板。这种类就叫做“抽象类”（abastract class）。
+TypeScript 允许在类的定义前面，加上关键字`abstract`，表示该类不能被实例化，只能当作其他类的模板。这种类就叫做“抽象类”（abstract class）。
 
 ```typescript
 abstract class A {
@@ -1400,9 +1426,7 @@ class B extends A {
 
 上面示例中，抽象类`A`定义了抽象属性`foo`，子类`B`必须实现这个属性，否则会报错。
 
-下面是抽象方法的例子。
-
-如果抽象类的属性前面加上`abstract`，就表明子类必须给出该方法的实现。
+下面是抽象方法的例子。如果抽象类的方法前面加上`abstract`，就表明子类必须给出该方法的实现。
 
 ```typescript
 abstract class A {

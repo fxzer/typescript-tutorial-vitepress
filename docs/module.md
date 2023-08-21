@@ -54,7 +54,7 @@ $ tsc a.ts b.ts
 $ tsc b.ts
 ```
 
-上面命令发现`b.ts`依赖`a.js`，就会自动寻找`a.ts`，也将其同时编译，因此编译产物还是`a.js`和`b.js`两个文件。
+上面命令发现`b.ts`依赖`a.ts`，就会自动寻找`a.ts`，也将其同时编译，因此编译产物还是`a.js`和`b.js`两个文件。
 
 如果想将`a.ts`和`b.ts`编译成一个文件，可以使用`--outFile`参数。
 
@@ -221,7 +221,7 @@ let obj = { foo: 123 };
 export = obj;
 ```
 
-`export = `语句输出的对象，只能使用`import =`语句加载。
+`export =`语句输出的对象，只能使用`import =`语句加载。
 
 ```typescript
 import obj = require('./a');

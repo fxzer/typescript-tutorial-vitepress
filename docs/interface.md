@@ -322,7 +322,7 @@ interface CountryWithPop extends Country {
 
 ### interface 继承 class
 
-inteface 还可以继承 class，即继承该类的所有成员。关于 class 的详细解释，参见下一章。
+interface 还可以继承 class，即继承该类的所有成员。关于 class 的详细解释，参见下一章。
 
 ```typescript
 class A {
@@ -465,7 +465,7 @@ interface A {
 }
 ```
 
-上面示例中，`f()`方法有一个类型声明是，参数`x`是字面量类型，这个类型声明的优先级最高，会排在函数重载的最前面。
+上面示例中，`f()`方法有一个类型声明的参数`x`是字面量类型，这个类型声明的优先级最高，会排在函数重载的最前面。
 
 一个实际的例子是 Document 对象的`createElement()`方法，它会根据参数的不同，而生成不同的 HTML 节点对象。
 
@@ -613,7 +613,7 @@ const obj:A = {
 
 上面示例中，`interface`把类型`A`的两个定义合并在一起。
 
-这表明，inteface 是开放的，可以添加属性，type 是封闭的，不能添加属性，只能定义新的 type。
+这表明，interface 是开放的，可以添加属性，type 是封闭的，不能添加属性，只能定义新的 type。
 
 （4）`interface`不能包含属性映射（mapping），`type`可以，详见《映射》一章。
 
@@ -655,7 +655,7 @@ type Foo = {
 ```typescript
 class Calculator implements Foo {
   result = 0;
-  add(num：number) {
+  add(num:number) {
     this.result += num;
     return this;
   }
