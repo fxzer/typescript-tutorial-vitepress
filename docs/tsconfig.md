@@ -347,11 +347,13 @@ obj.foo = undefined; // 报错
 
 ### jsx
 
-`jsx`设置如何处理`.tsx`文件。它一般以下三个值。
+`jsx`设置如何处理`.tsx`文件。它可以取以下五个值。
 
-- `preserve`：保持 jsx 语法不变，输出的文件名为 jsx。
+- `preserve`：保持 jsx 语法不变，输出的文件名为`.jsx`。
 - `react`：将`<div />`编译成`React.createElement("div")`，输出的文件名为`.js`。
 - `react-native`：保持 jsx 语法不变，输出的文件后缀名为`.js`。
+- `react-jsx`：将`<div />`编译成`_jsx("div")`，输出的文件名为`.js`。
+- `react-jsxdev`：跟`react-jsx`类似，但是为`_jsx()`加上更多的开发调试项，输出的文件名为`.js`。
 
 ```javascript
 {
@@ -447,8 +449,9 @@ TypeScript 内置的类型描述文件，主要有以下一些，完整的清单
 `moduleResolution`确定模块路径的算法，即如何查找模块。它可以取以下四种值。
 
 - `node`：采用 Node.js 的 CommonJS 模块算法。
-- `node16`或`nodenext`：采用 Node.js 的 ECMAScript 模块算法，从  TypeScript 4.7 开始支持。
+- `node16`或`nodenext`：采用 Node.js 的 ECMAScript 模块算法，从 TypeScript 4.7 开始支持。
 - `classic`：TypeScript 1.6 之前的算法，新项目不建议使用。
+- `bundler`：TypeScript 5.0 新增的选项，表示当前代码会被其他打包器（比如 Webpack、Vite、esbuild、Parcel、rollup、swc）处理，从而放宽加载规则，它要求`module`设为`es2015`或更高版本，详见加入该功能的 [PR 说明](https://github.com/microsoft/TypeScript/pull/51669)。
 
 它的默认值与`module`属性有关，如果`module`为`AMD`、`UMD`、`System`或`ES6/ES2015`，默认值为`classic`；如果`module`为`node16`或`nodenext`，默认值为这两个值；其他情况下,默认值为`Node`。
 
@@ -643,7 +646,7 @@ TypeScript 内置的类型描述文件，主要有以下一些，完整的清单
 
 `strictBindCallApply`设置是否对函数的`call()`、`bind()`、`apply()`这三个方法进行类型检查。
 
-如果不打开`strictBindCallApply`编译选项，编译器不会对以三个方法进行类型检查，参数类型都是`any`，传入任何参数都不会产生编译错误。
+如果不打开`strictBindCallApply`编译选项，编译器不会对以上三个方法进行类型检查，参数类型都是`any`，传入任何参数都不会产生编译错误。
 
 ```typescript
 function fn(x: string) {
@@ -788,7 +791,9 @@ class User {
 
 ### typeRoots
 
-`typeRoots`设置类型模块所在的目录，默认是`node_modules/@types`。
+`typeRoots`设置类型模块所在的目录，默认是`node_modules/@types`，该目录里面的模块会自动加入编译。一旦指定了该属性，就不会再用默认值`node_modules/@types`里面的类型模块。
+
+该属性的值是一个数组，数组的每个成员就是一个目录，它们的路径是相对于`tsconfig.json`位置。
 
 ```typescript
 {
@@ -800,7 +805,7 @@ class User {
 
 ### types
 
-`types`设置`typeRoots`目录下需要包括在编译之中的类型模块。默认情况下，该目录下的所有类型模块，都会自动包括在编译之中。
+默认情况下，`typeRoots`目录下所有模块都会自动加入编译，如果指定了`types`属性，那么只有其中列出的模块才会自动加入编译。
 
 ```typescript
 {
@@ -809,6 +814,10 @@ class User {
   }
 }
 ```
+
+上面的设置表示，默认情况下，只有`./node_modules/@types/node`、`./node_modules/@types/jest`和`./node_modules/@types/express`会自动加入编译，其他`node_modules/@types/`目录下的模块不会加入编译。
+
+如果`"types": []`，就表示不会自动将所有`@types`模块加入编译。
 
 ### useUnknownInCatchVariables
 

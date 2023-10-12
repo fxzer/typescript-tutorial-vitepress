@@ -113,7 +113,7 @@ const obj:A = ['a', 'b', 'c'];
 
 同样的，一个接口中最多只能定义一个数值索引。数值索引会约束所有名称为数值的属性。
 
-如果一个 interface 同时定义了字符串索引和数值索引，那么数值索性必须服从于字符串索引。因为在 JavaScript 中，数值属性名最终是自动转换成字符串属性名。
+如果一个 interface 同时定义了字符串索引和数值索引，那么数值索引必须服从于字符串索引。因为在 JavaScript 中，数值属性名最终是自动转换成字符串属性名。
 
 ```typescript
 interface A {
@@ -516,7 +516,7 @@ s.area;   // bigint | number
 
 `interface`命令与`type`命令作用类似，都可以表示对象类型。
 
-很多对象类型即可以用 interface 表示，也可以用 type 表示。而且，两者往往可以换用，几乎所有的 interface 命令都可以改写为 type 命令。
+很多对象类型既可以用 interface 表示，也可以用 type 表示。而且，两者往往可以换用，几乎所有的 interface 命令都可以改写为 type 命令。
 
 它们的相似之处，首先表现在都能为对象类型起名。
 
@@ -526,7 +526,7 @@ type Country = {
   capital: string;
 }
 
-interface Coutry {
+interface Country {
   name: string;
   capital: string;
 }

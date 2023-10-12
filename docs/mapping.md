@@ -39,7 +39,7 @@ type B = {
 
 - `prop`：属性名变量，名字可以随便起。
 - `in`：运算符，用来取出右侧的联合类型的每一个成员。
-- `Keyof A`：返回类型`A`的每一个属性名，组成一个联合类型。
+- `keyof A`：返回类型`A`的每一个属性名，组成一个联合类型。
 
 下面是复制原始类型的例子。
 
@@ -113,7 +113,7 @@ type MyObj = {
 
 上面示例中，`[p in string]`就是属性名索引形式`[p: string]`的映射写法。
 
-通过映射，可以某个对象的所有属性改成可选属性。
+通过映射，可以把某个对象的所有属性改成可选属性。
 
 ```typescript
 type A = {
@@ -237,7 +237,7 @@ type A<T> = {
 };
 
 // 等同于
-type B<T> = {
+type A<T> = {
   readonly [P in keyof T]?: T[P];
 };
 ```
@@ -262,7 +262,7 @@ type B = {
 type B = {
   fooID: number;
   barID: number;
-}；
+};
 ```
 
 上面示例中，类型`B`是类型`A`的映射，但在映射时把属性名改掉了，在原始属性名后面加上了字符串`ID`。
@@ -342,7 +342,7 @@ type MyEvents<Events extends { kind: string }> = {
   [E in Events as E['kind']]: (event: E) => void;
 }
 
-type Config = MyEvent<S|C>;
+type Config = MyEvents<S|C>;
 // 等同于
 type Config = {
   square: (event:S) => void;

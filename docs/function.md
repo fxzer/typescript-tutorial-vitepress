@@ -546,7 +546,7 @@ function f():void {
 }
 ```
 
-需要特别注意的是，如果变量、对象方法、函数参数的类型是 void 类型的函数，那么并不代表不能赋值为有返回值的函数。恰恰相反，该变量、对象方法和函数参数可以接受返回任意值的函数，这时并不会报错。
+需要特别注意的是，如果变量、对象方法、函数参数是一个返回值为 void 类型的函数，那么并不代表不能赋值为有返回值的函数。恰恰相反，该变量、对象方法和函数参数可以接受返回任意值的函数，这时并不会报错。
 
 ```typescript
 type voidFunc = () => void;
@@ -556,7 +556,7 @@ const f:voidFunc = () => {
 };
 ```
 
-上面示例中，变量`f`的类型是`voidFunc`，是一个没有返回值的函数类型。但是实际上，`f`的值是一个有返回值的函数（返回`123`），编译时不会报错。
+上面示例中，变量`f`的类型是`voidFunc`，是一个没有返回值的函数。但是实际上，`f`的值可以是一个有返回值的函数（返回`123`），编译时不会报错。
 
 这是因为，这时 TypeScript 认为，这里的 void 类型只是表示该函数的返回值没有利用价值，或者说不应该使用该函数的返回值。只要不用到这里的返回值，就不会报错。
 
@@ -571,7 +571,7 @@ const ret = [];
 src.forEach(el => ret.push(el));
 ```
 
-上面示例中，`push()`有返回值，表示新插入的元素在数组里面的位置。但是，对于`forEach()`方法来说，这个返回值是没有作用的，根本用不到，所以 TypeScript 不会报错。
+上面示例中，`push()`有返回值，表示插入新元素后数组的长度。但是，对于`forEach()`方法来说，这个返回值是没有作用的，根本用不到，所以 TypeScript 不会报错。
 
 如果后面使用了这个函数的返回值，就违反了约定，则会报错。
 
@@ -601,6 +601,16 @@ const f3 = function ():void {
 
 上面示例中，函数字面量声明了返回`void`类型，这时只要有返回值（除了`undefined`和`null`）就会报错。
 
+函数的运行结果如果是抛出错误，也允许将返回值写成`void`。
+
+```typescript
+function throwErr():void {
+  throw new Error('something wrong');
+}
+```
+
+上面示例中，函数`throwErr()`会抛出错误，返回值类型写成`void`是允许的。
+
 除了函数，其他变量声明为`void`类型没有多大意义，因为这时只能赋值为`undefined`或者`null`（假定没有打开`strictNullChecks`) 。
 
 ```typescript
@@ -624,7 +634,7 @@ function fail(msg:string):never {
 }
 ```
 
-上面示例中，函数`fail()`会抛错，不会正常退出，所以返回值类型是`never`。
+上面示例中，函数`fail()`会抛出错误，不会正常退出，所以返回值类型是`never`。
 
 注意，只有抛出错误，才是 never 类型。如果显式用`return`语句返回一个 Error 对象，返回值就不是 never 类型。
 
@@ -635,6 +645,8 @@ function fail():Error {
 ```
 
 上面示例中，函数`fail()`返回一个 Error 对象，所以返回值类型是 Error。
+
+另外，由于抛出错误的情况属于`never`类型或`void`类型，所以无法从返回值类型中获知，抛出的是哪一种错误。
 
 （2）无限执行的函数。
 
@@ -683,6 +695,24 @@ function f(
 ```
 
 上面示例中，函数`f()`的参数`x`的类型为`string|undefined`。但是，`x`类型为`undefined`时，调用了`neverReturns()`。这个函数不会返回，因此 TypeScript 可以推断出，判断语句后面的那个`x`，类型一定是`string`。
+
+一个函数如果某些条件下有正常返回值，另一些条件下抛出错误，这时它的返回值类型可以省略`never`。
+
+```typescript
+function sometimesThrow():number {
+  if (Math.random() > 0.5) {
+    return 100;
+  }
+
+  throw new Error('Something went wrong');
+}
+
+const result = sometimesThrow();
+```
+
+上面示例中，函数`sometimesThrow()`的返回值其实是`number|never`，但是一般都写成`number`，包括最后一行的变量`result`的类型，也是被推断为`number`。
+
+原因是前面章节提到过，`never`是 TypeScript 的唯一一个底层类型，所有其他类型都包括了`never`。从集合论的角度看，`number|never`等同于`number`。这也提示我们，函数的返回值无论是什么类型，都可能包含了抛出错误的情况。
 
 ## 局部类型
 
@@ -859,7 +889,7 @@ type CreateElement = {
 }
 ```
 
-由于重载是一种比较复杂的类型声明方法，为了降低复杂性，一般来说，如果可以的话，应该优先使用联合类型替代函数重载。
+由于重载是一种比较复杂的类型声明方法，为了降低复杂性，一般来说，如果可以的话，应该优先使用联合类型替代函数重载，除非多个参数之间、或者某个参数与返回值之间，存在对应关系。
 
 ```typescript
 // 写法一
