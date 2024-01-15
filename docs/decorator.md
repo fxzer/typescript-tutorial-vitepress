@@ -251,10 +251,10 @@ inst1.count // 1
 
 ```typescript
 function functionCallable(
-  value as any, {kind} as any
-) {
+  value:any, {kind}:any
+):any {
   if (kind === 'class') {
-    return function (...args) {
+    return function (...args:any) {
       if (new.target !== undefined) {
         throw new TypeError('This function can’t be new-invoked');
       }
@@ -265,10 +265,13 @@ function functionCallable(
 
 @functionCallable
 class Person {
-  constructor(name) {
+  name:string;
+  constructor(name:string) {
     this.name = name;
   }
 }
+
+// @ts-ignore
 const robin = Person('Robin');
 robin.name // 'Robin'
 ```
@@ -688,7 +691,7 @@ class C {
 }
 ```
 
-上面示例中，`accessor`修饰符等同于为属性`x`自动生成取值器和存值器，它们作用于私有属性`x`。也就是说，上面的代码等同于下面的代码。
+上面示例中，`accessor`修饰符等同于为公开属性`x`自动生成取值器和存值器，它们作用于私有属性`x`。（注意，公开的`x`与私有的`x`不是同一个属性。）也就是说，上面的代码等同于下面的代码。
 
 ```typescript
 class C {
@@ -818,6 +821,9 @@ class T {
 
   @d('实例属性')
   instanceField = log('实例属性值');
+
+  @d('静态方法装饰器')
+  static fn(){}
 }
 ```
 
@@ -826,16 +832,18 @@ class T {
 它的运行结果如下。
 
 ```typescript
-// "评估 @d(): 类装饰器"
-// "评估 @d(): 静态属性装饰器"
-// "评估 @d(): 原型方法"
-// "计算方法名"
-// "评估 @d(): 实例属性"
-// "应用 @d(): 原型方法"
-// "应用 @d(): 静态属性装饰器"
-// "应用 @d(): 实例属性"
-// "应用 @d(): 类装饰器"
-// "静态属性值"
+评估 @d(): 类装饰器
+评估 @d(): 静态属性装饰器
+评估 @d(): 原型方法
+计算方法名
+评估 @d(): 实例属性
+评估 @d(): 静态方法装饰器
+应用 @d(): 静态方法装饰器
+应用 @d(): 原型方法
+应用 @d(): 静态属性装饰器
+应用 @d(): 实例属性
+应用 @d(): 类装饰器
+静态属性值
 ```
 
 可以看到，类载入的时候，代码按照以下顺序执行。
@@ -846,7 +854,7 @@ class T {
 
 （2）装饰器应用：实际执行装饰器函数，将它们与对应的方法和属性进行结合。
 
-原型方法的装饰器首先应用，然后是静态属性和静态方法装饰器，接下来是实例属性装饰器，最后是类装饰器。
+静态方法装饰器首先应用，然后是原型方法的装饰器和静态属性装饰器，接下来是实例属性装饰器，最后是类装饰器。
 
 注意，“实例属性值”在类初始化的阶段并不执行，直到类实例化时才会执行。
 

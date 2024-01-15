@@ -156,7 +156,7 @@ $ yarn add --dev @tsconfig/deno
 }
 ```
 
-## compileOptions
+## compilerOptions
 
 `compilerOptions`属性用来定制编译行为。这个属性可以省略，这时编译器将使用默认设置。
 
@@ -579,7 +579,7 @@ TypeScript 内置的类型描述文件，主要有以下一些，完整的清单
 
 ### rootDirs
 
-`rootDirs`把多个不同目录，合并成一个目虚拟目录，便于模块定位。
+`rootDirs`把多个不同目录，合并成一个虚拟目录，便于模块定位。
 
 ```typescript
 {
@@ -629,7 +629,7 @@ TypeScript 内置的类型描述文件，主要有以下一些，完整的清单
 - strictPropertyInitialization
 - noImplicitAny
 - noImplicitThis
-- useUnknownInCatchVaria
+- useUnknownInCatchVariables
 
 打开`strict`的时候，允许单独关闭其中一项。
 

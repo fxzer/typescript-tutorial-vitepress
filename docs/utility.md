@@ -467,7 +467,7 @@ type Mutable<T> = {
 
 上面代码中，`-readonly`表示去除属性的只读标志。
 
-相应地，`+readonly`就表示增加只读标志，等同于`readonly`。因此，`ReadOnly<Type>`的实现也可以写成下面这样。
+相应地，`+readonly`就表示增加只读标志，等同于`readonly`。因此，`Readonly<Type>`的实现也可以写成下面这样。
 
 ```typescript
 type Readonly<T> = {
@@ -644,7 +644,7 @@ type ReturnType<
 `ThisParameterType<Type>`提取函数类型中`this`参数的类型。
 
 ```typescript
-function toHex(this: Number) {
+function toHex(this:number) {
   return this.toString(16);
 }
 
