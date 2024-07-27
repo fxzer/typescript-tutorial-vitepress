@@ -374,7 +374,7 @@ function f(x = 456) {
   return x;
 }
 
-f2(undefined) // 456
+f(undefined) // 456
 ```
 
 具有默认值的参数如果不位于参数列表的末尾，调用时不能省略，如果要触发默认值，必须显式传入`undefined`。
@@ -497,6 +497,8 @@ function arraySum(
 ```
 
 上面示例中，参数`arr`的类型是`readonly number[]`，表示为只读参数。如果函数体内部修改这个数组，就会报错。
+
+注意，`readonly`关键字目前只允许用在数组和元组类型的参数前面，如果用在其他类型的参数前面，就会报错。
 
 ## void 类型
 
