@@ -1,6 +1,7 @@
 {
   "name": "typescript-tutorial-vitepress",
   "version": "1.0.0",
+  "type": "module",
   "description": "TypeScript 开源教程（VitePress版），介绍基本概念和用法，面向初学者。",
   "scripts": {
     "dev": "vitepress dev docs",
@@ -8,18 +9,12 @@
     "preview": "vitepress preview docs"
   },
   "devDependencies": {
-    "flexsearch": "^0.7.43",
-    "markdown-it": "^14.0.0",
-    "unplugin-auto-import": "^0.17.3",
-    "unplugin-icons": "^0.18.2",
-    "unplugin-vue-components": "^0.26.0",
-    "vite": "^5.0.11",
-    "vitepress": "1.0.0-rc.36",
-    "vitepress-plugin-search": "1.0.4-alpha.22",
-    "vue": "^3.4.13"
+    "markdown-it": "^14.1.0",
+    "vite": "^5.3.5",
+    "vitepress": "1.2.3",
+    "vue": "^3.4.34"
   },
   "dependencies": {
-    "sass": "^1.69.7",
-    "sitemap-ts": "^1.6.1"
+    "sass": "^1.77.8"
   }
 }

@@ -39,18 +39,18 @@ jobs:
           build_dir: dist
           github_token: ${{ secrets.DEPLOY_TOKEN }}
 
-      - name: Sync to Gitee
-        uses: wearerequired/git-mirror-action@master
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
-        with:
-          source-repo: git@github.com:${{ env.REPO_NAME }}.git
-          destination-repo: git@gitee.com:${{ env.REPO_NAME }}.git
+      # - name: Sync to Gitee
+      #   uses: wearerequired/git-mirror-action@master
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+      #   with:
+      #     source-repo: git@github.com:${{ env.REPO_NAME }}.git
+      #     destination-repo: git@gitee.com:${{ env.REPO_NAME }}.git
 
-      - name: Build Gitee Pages
-        uses: yanglbme/gitee-pages-action@main
-        with:
-          gitee-username: ${{ env.USERNAME }}
-          gitee-password: ${{ secrets.GITEE_PSWD }}
-          gitee-repo: ${{ env.REPO_NAME }}
-          branch: gh-pages
+      # - name: Build Gitee Pages
+      #   uses: yanglbme/gitee-pages-action@main
+      #   with:
+      #     gitee-username: ${{ env.USERNAME }}
+      #     gitee-password: ${{ secrets.GITEE_PSWD }}
+      #     gitee-repo: ${{ env.REPO_NAME }}
+      #     branch: gh-pages

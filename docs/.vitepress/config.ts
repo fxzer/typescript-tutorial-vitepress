@@ -17,16 +17,19 @@ export default  {
   ignoreDeadLinks: true,//忽略无效链接
   markdown: {
     theme: {
-      light:'github-light',
-      dark: 'dracula-soft',
+      light: 'vitesse-light',
+      dark: 'vitesse-dark',
     },
-    // lineNumbers: true,
+    lineNumbers: true,
   },
   head: [
     // ['link', { rel: 'icon', type: 'image/svg+xml', href: '/typescript-tutorial-vitepress/logo.svg' }],
     ['link', { rel: 'icon', href: '/typescript-tutorial-vitepress/favicon.ico' }],
   ],
   themeConfig: {
+    search: {
+      provider: 'local',
+    },
     outline: 'deep',//侧边栏深度:数字或者deep
     outlineTitle: '文章目录',
     //TODO
