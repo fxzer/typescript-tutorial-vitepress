@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const g=JSON.parse('{"title":"any 类型，unknown 类型，never 类型","description":"","frontmatter":{},"headers":[],"relativePath":"any.md","filePath":"any.md"}'),e={name:"any.md"},p=n("",77),l=[p];function h(k,t,d,r,c,o){return a(),i("div",null,l)}const A=s(e,[["render",h]]);export{g as __pageData,A as default};

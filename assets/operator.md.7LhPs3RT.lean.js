@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 类型运算符","description":"","frontmatter":{},"headers":[],"relativePath":"operator.md","filePath":"operator.md"}'),p={name:"operator.md"},e=n("",168),l=[e];function h(k,t,r,d,y,g){return a(),i("div",null,l)}const A=s(p,[["render",h]]);export{o as __pageData,A as default};

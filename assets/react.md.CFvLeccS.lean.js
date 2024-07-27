@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 的 React 支持","description":"","frontmatter":{},"headers":[],"relativePath":"react.md","filePath":"react.md"}'),p={name:"react.md"},l=n("",19),h=[l];function t(e,k,r,d,g,c){return a(),i("div",null,h)}const A=s(p,[["render",t]]);export{o as __pageData,A as default};

@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const A=JSON.parse('{"title":"TypeScript 的 Enum 类型","description":"","frontmatter":{},"headers":[],"relativePath":"enum.md","filePath":"enum.md"}'),p={name:"enum.md"},l=n("",116),h=[l];function e(k,t,r,d,y,g){return a(),i("div",null,h)}const b=s(p,[["render",e]]);export{A as __pageData,b as default};

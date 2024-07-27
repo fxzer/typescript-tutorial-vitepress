@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 类型工具","description":"","frontmatter":{},"headers":[],"relativePath":"utility.md","filePath":"utility.md"}'),p={name:"utility.md"},e=n("",192),l=[e];function t(h,k,r,d,y,g){return a(),i("div",null,l)}const A=s(p,[["render",t]]);export{o as __pageData,A as default};

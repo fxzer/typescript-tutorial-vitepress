@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 的函数类型","description":"","frontmatter":{},"headers":[],"relativePath":"function.md","filePath":"function.md"}'),p={name:"function.md"},l=n("",229),e=[l];function h(k,t,r,d,y,g){return a(),i("div",null,e)}const b=s(p,[["render",h]]);export{o as __pageData,b as default};

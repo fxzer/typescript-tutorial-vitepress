@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const g=JSON.parse('{"title":"TypeScript 的 symbol 类型","description":"","frontmatter":{},"headers":[],"relativePath":"symbol.md","filePath":"symbol.md"}'),e={name:"symbol.md"},l=n("",48),p=[l];function h(t,k,d,r,y,c){return a(),i("div",null,p)}const b=s(e,[["render",h]]);export{g as __pageData,b as default};

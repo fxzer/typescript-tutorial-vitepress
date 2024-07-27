@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"declare 关键字","description":"","frontmatter":{},"headers":[],"relativePath":"declare.md","filePath":"declare.md"}'),l={name:"declare.md"},p=n("",87),e=[p];function h(k,t,r,d,c,g){return a(),i("div",null,e)}const b=s(l,[["render",h]]);export{o as __pageData,b as default};

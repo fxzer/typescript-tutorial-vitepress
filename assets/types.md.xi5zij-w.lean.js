@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 的类型系统","description":"","frontmatter":{},"headers":[],"relativePath":"types.md","filePath":"types.md"}'),p={name:"types.md"},e=n("",236),l=[e];function h(t,k,d,r,c,y){return a(),i("div",null,l)}const b=s(p,[["render",h]]);export{o as __pageData,b as default};

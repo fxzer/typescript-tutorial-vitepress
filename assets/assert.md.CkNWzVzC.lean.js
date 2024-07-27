@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 的类型断言","description":"","frontmatter":{},"headers":[],"relativePath":"assert.md","filePath":"assert.md"}'),p={name:"assert.md"},l=n("",144),e=[l];function h(k,t,r,d,c,g){return a(),i("div",null,e)}const A=s(p,[["render",h]]);export{o as __pageData,A as default};

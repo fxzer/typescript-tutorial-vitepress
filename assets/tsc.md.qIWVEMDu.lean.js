@@ -1,0 +1,1 @@
+import{_ as e,c as s,o as p,a3 as c}from"./chunks/framework.Ch4R_FM4.js";const m=JSON.parse('{"title":"tsc 命令行编译器","description":"","frontmatter":{},"headers":[],"relativePath":"tsc.md","filePath":"tsc.md"}'),o={name:"tsc.md"},i=c("",84),a=[i];function n(d,t,l,r,h,k){return p(),s("div",null,a)}const y=e(o,[["render",n]]);export{m as __pageData,y as default};

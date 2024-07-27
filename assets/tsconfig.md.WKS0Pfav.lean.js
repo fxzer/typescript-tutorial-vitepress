@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const g=JSON.parse('{"title":"tsconfig.json","description":"","frontmatter":{},"headers":[],"relativePath":"tsconfig.md","filePath":"tsconfig.md"}'),e={name:"tsconfig.md"},l=n("",250),p=[l];function t(h,k,r,d,o,c){return a(),i("div",null,p)}const y=s(e,[["render",t]]);export{g as __pageData,y as default};

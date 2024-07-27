@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 的元组类型","description":"","frontmatter":{},"headers":[],"relativePath":"tuple.md","filePath":"tuple.md"}'),p={name:"tuple.md"},e=n("",77),l=[e];function h(t,k,r,d,y,c){return a(),i("div",null,l)}const b=s(p,[["render",h]]);export{o as __pageData,b as default};

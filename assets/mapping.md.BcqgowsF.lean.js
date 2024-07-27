@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const b=JSON.parse('{"title":"TypeScript 的类型映射","description":"","frontmatter":{},"headers":[],"relativePath":"mapping.md","filePath":"mapping.md"}'),p={name:"mapping.md"},l=n("",74),h=[l];function e(k,t,r,d,y,g){return a(),i("div",null,h)}const o=s(p,[["render",e]]);export{b as __pageData,o as default};

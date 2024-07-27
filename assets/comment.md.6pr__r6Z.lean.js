@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const o=JSON.parse('{"title":"TypeScript 的注释指令","description":"","frontmatter":{},"headers":[],"relativePath":"comment.md","filePath":"comment.md"}'),e={name:"comment.md"},p=n("",61),l=[p];function t(h,k,r,d,c,g){return a(),i("div",null,l)}const b=s(e,[["render",t]]);export{o as __pageData,b as default};

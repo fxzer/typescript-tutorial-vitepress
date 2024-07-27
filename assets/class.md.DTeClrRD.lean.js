@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a3 as n}from"./chunks/framework.Ch4R_FM4.js";const b=JSON.parse('{"title":"TypeScript 的 class 类型","description":"","frontmatter":{},"headers":[],"relativePath":"class.md","filePath":"class.md"}'),p={name:"class.md"},l=n("",330),e=[l];function h(k,t,r,d,c,g){return a(),i("div",null,e)}const o=s(p,[["render",h]]);export{b as __pageData,o as default};
