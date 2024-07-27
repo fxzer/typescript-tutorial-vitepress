@@ -1,4 +1,3 @@
-import { generateSitemap as sitemap } from 'sitemap-ts'//站点地图
 import getNavs from "./configs/nav"
 import socialLinks from "./configs/socialLinks"
 import sidebar from './sidebar/index'
@@ -53,8 +52,5 @@ export default  {
     },
     socialLinks,
     sidebar,
-    async buildEnd() {
-      await sitemap({ hostname: 'https://fxzer.github.io/typescript-tutorial-vitepress' });
-    }
   },
 } 
